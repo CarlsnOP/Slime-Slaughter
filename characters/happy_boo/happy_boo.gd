@@ -1,9 +1,10 @@
 extends Node2D
 
+@onready var animation_player = %AnimationPlayer
 
 func play_idle_animation():
-	%AnimationPlayer.play("idle")
+	animation_player.play("idle")
 
 
 func play_walk_animation():
-	%AnimationPlayer.play("walk")
+	animation_player.play("walk")

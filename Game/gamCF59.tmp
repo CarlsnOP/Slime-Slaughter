@@ -1,0 +1,103 @@
+[gd_scene load_steps=7 format=3 uid="uid://tkbss6j561io"]
+
+[ext_resource type="PackedScene" uid="uid://c4rr10136c3fa" path="res://scenes/Player/player.tscn" id="1_f1evh"]
+[ext_resource type="Script" path="res://Game/game.gd" id="1_h1umf"]
+[ext_resource type="PackedScene" uid="uid://c0cxxa03tv2lw" path="res://trees/tree.tscn" id="2_rfpqq"]
+[ext_resource type="Script" path="res://Game/GameOver.gd" id="4_okc0u"]
+
+[sub_resource type="Curve2D" id="Curve2D_fqpfy"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 2017, -187, 0, 0, 0, 0, -160, -187, 0, 0, 0, 0, -156, 1151, 0, 0, 0, 0, 2014, 1149, 0, 0, 0, 0, 2017, -187)
+}
+point_count = 5
+
+[sub_resource type="LabelSettings" id="LabelSettings_l2blg"]
+font_size = 200
+outline_size = 30
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 20
+shadow_color = Color(0, 0, 0, 0.313726)
+shadow_offset = Vector2(10, 10)
+
+[node name="Game" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_h1umf")
+
+[node name="Player" parent="." instance=ExtResource("1_f1evh")]
+position = Vector2(902, 537)
+
+[node name="Path2D" type="Path2D" parent="Player"]
+position = Vector2(-902, -537)
+curve = SubResource("Curve2D_fqpfy")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Player/Path2D"]
+unique_name_in_owner = true
+position = Vector2(2017, -187)
+rotation = 3.14159
+
+[node name="Trees" type="Node" parent="."]
+
+[node name="Tree" parent="Trees" instance=ExtResource("2_rfpqq")]
+position = Vector2(326, 355)
+
+[node name="Tree2" parent="Trees" instance=ExtResource("2_rfpqq")]
+position = Vector2(1175, 407)
+
+[node name="Tree3" parent="Trees" instance=ExtResource("2_rfpqq")]
+position = Vector2(1494, 694)
+
+[node name="Tree4" parent="Trees" instance=ExtResource("2_rfpqq")]
+position = Vector2(484, 777)
+
+[node name="Tree5" parent="Trees" instance=ExtResource("2_rfpqq")]
+position = Vector2(554, 853)
+
+[node name="Tree6" parent="Trees" instance=ExtResource("2_rfpqq")]
+position = Vector2(1115, 480)
+
+[node name="Tree7" parent="Trees" instance=ExtResource("2_rfpqq")]
+position = Vector2(1045, 783)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -30
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_right = 1928.0
+offset_bottom = 1089.0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.3
+autostart = true
+
+[node name="GameOver" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+process_mode = 3
+visible = false
+script = ExtResource("4_okc0u")
+
+[node name="ColorRect" type="ColorRect" parent="GameOver"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.588235)
+
+[node name="Label" type="Label" parent="GameOver/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.5
+offset_top = -11.5
+offset_right = 48.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "GAME OVER!"
+label_settings = SubResource("LabelSettings_l2blg")
+
+[connection signal="health_depleted" from="Player" to="." method="_on_player_health_depleted"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
