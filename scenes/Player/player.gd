@@ -5,7 +5,7 @@ signal health_depleted
 
 @onready var happy_boo = %HappyBoo
 
-const DAMAGE_RATE: = 50.0
+const DAMAGE_RATE: = 5.0
 
 var _health: float = 100.0
 var _speed: float = 600.0

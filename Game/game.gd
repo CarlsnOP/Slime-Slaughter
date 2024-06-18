@@ -1,6 +1,5 @@
 extends Node2D
 
-var _game_over: bool = false
 
 func spawn_mob() -> void:
 	var _new_monster = preload("res://Monster/monster.tscn").instantiate()
@@ -12,7 +11,6 @@ func _on_timer_timeout():
 	spawn_mob()
 
 func _on_player_health_depleted():
-	_game_over = true
 	%GameOver.visible = true
 	get_tree().paused = true
 
